@@ -4,7 +4,7 @@ META-SHARE Installation Manual
 .. figure:: _static/metanet_logo.png
    :align: center
    :alt: METANET logo
-   
+
    *A Network of Excellence forging the Multilingual Europe Technology Alliance*
 
 Authors: Christian Federmann, Marc Schröder,  Christian Spurk and Sergio Oller
@@ -20,11 +20,11 @@ for system administrators setting up META-SHARE nodes. It also contains
 a section on how to upgrade an existing META-SHARE V3.0.x installation
 to V3.0.3.
 
-Backing up META-SHARE 
+Backing up META-SHARE
 ----------------------
 
 META-SHARE stores the information in two places: a database and a storage
-directory. Please follow these instructions to back up both things 
+directory. Please follow these instructions to back up both things
 before any upgrade, to revert to the previous version in case of problems.
 
 Before backing up, stop the server to prevent database modifications during
@@ -45,7 +45,7 @@ and port are stored in the ``DATABASES`` variable in
         pg_dump metashare_db_name > metashare_database_backup.sql
 
 Make sure the database dump you have created has contents (is not empty)
-and no error appears. Check the `PostgreSQL Documentation: SQL Dump 
+and no error appears. Check the `PostgreSQL Documentation: SQL Dump
 <http://www.postgresql.org/docs/9.1/static/backup-dump.html>`__ for
 further details if needed.
 
@@ -78,7 +78,7 @@ Here are now the steps you should follow for a successful migration:
 
 2. If you have not done it already, go through `Backing up META-SHARE`_.
 
-3. Follow the `Installing META-SHARE`_ section on a new directory.    
+3. Follow the `Installing META-SHARE`_ section on a new directory.
 
    **Note:** during the installation you can skip the creation of a
    database and a role for PostgreSQL, as you already have one in your
@@ -142,7 +142,7 @@ for META-SHARE:
     ::
 
         sudo su – postgres
-        createuser -W metashare_user 
+        createuser -W metashare_user
 
 Create a database ``metashare_db`` (or any other name), owned by the
 just created user ``metashare_user`` (or the name you chose above):
@@ -151,6 +151,18 @@ just created user ``metashare_user`` (or the name you chose above):
 
         sudo su – postgres
         createdb --owner=metashare_user metashare_db
+
+On Centos 7 and derivatives:
+
+Install PostgreSQL with:
+
+    ::
+
+    sudo yum install postgresql-server postgresql-contrib
+    sudo postgresql-setup initdb
+    sudo systemctl start postgresql
+    sudo systemctl enable postgresql
+
 
 
 Python interpreter
@@ -195,8 +207,8 @@ the recommended tool to install python packages.
 
 The ``psycopg2`` python module is used for connecting PostgreSQL to META-SHARE.
 In order to build this module, header files for the PostgreSQL library
-``libpq5`` have to be installed, as well as the python headers. On Debian, 
-Ubuntu and derivatives, this can be achieved installing the ``libpq-dev`` and 
+``libpq5`` have to be installed, as well as the python headers. On Debian,
+Ubuntu and derivatives, this can be achieved installing the ``libpq-dev`` and
 ``python-dev`` packages using ``apt-get install libpq-dev python-dev``.
 
 Once this header files are installed, the rest of the dependencies can be
@@ -247,7 +259,7 @@ first set up a development server. Proceed as follows.
 
    ::
 
-       cp metashare/local_settings.sample metashare/local_settings.py    
+       cp metashare/local_settings.sample metashare/local_settings.py
 
    Edit at least the following constants: ``DJANGO_URL``, ``DJANGO_BASE``,
    ``STORAGE_PATH``, ``DEBUG``, ``SECRET_KEY``, ``ADMINS``, ``DATABASES``, and ``EMAIL_BACKEND``. More
@@ -281,7 +293,7 @@ requested details.
    ::
 
        source venv/bin/activate
-       python manage.py test repository storage accounts sync stats  
+       python manage.py test repository storage accounts sync stats
        deactivate
 
    This should return “OK”.
@@ -293,11 +305,11 @@ requested details.
    ::
 
        source venv/bin/activate
-       python manage.py runserver    
-         Validating models...    
-         0 errors found  
-         Django version 1.4.x, using settings 'metashare.settings'   
-         Development server is running at http://127.0.0.1:8000/ 
+       python manage.py runserver
+         Validating models...
+         0 errors found
+         Django version 1.4.x, using settings 'metashare.settings'
+         Development server is running at http://127.0.0.1:8000/
          Quit the server with CONTROL-C.
        deactivate
 
@@ -385,7 +397,7 @@ The local settings are the following:
            # From: https://gist.github.com/mattseymour/9205591
            import string, random
            chars = ''.join([string.ascii_letters, string.digits, string.punctuation]).replace('\'', '').replace('"', '').replace('\\', '')
-           print ''.join([random.SystemRandom().choice(chars) for i in range(50)]) 
+           print ''.join([random.SystemRandom().choice(chars) for i in range(50)])
 
 
 -  ``ADMINS``
@@ -406,31 +418,31 @@ The local settings are the following:
 
    ::
 
-       DATABASES = {   
-            'default': {   
-                'ENGINE': 'django.db.backends.sqlite3',    
-               'NAME': '{0}/testing.db'.format(ROOT_PATH)  
-            }  
+       DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+               'NAME': '{0}/testing.db'.format(ROOT_PATH)
+            }
        }
 
    For PostgreSQL, the following settings are required:
 
    ::
 
-       DATABASES = {   
-            'default': {   
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',    
-                'NAME': 'metashare',   
-                'USER': 'db_user', 
-                'PASSWORD': 'db_password', 
-                'HOST': 'localhost',   
-                # Set to empty string for default. 
-                'PORT': '',    
-                # This is required to make import more robust. 
-                'OPTIONS': {   
-                  'autocommit': True,  
-                }  
-            }  
+       DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': 'metashare',
+                'USER': 'db_user',
+                'PASSWORD': 'db_password',
+                'HOST': 'localhost',
+                # Set to empty string for default.
+                'PORT': '',
+                # This is required to make import more robust.
+                'OPTIONS': {
+                  'autocommit': True,
+                }
+            }
        }
 
 -  ``EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'``
@@ -524,7 +536,7 @@ Installing Solr
 
    ::
 
-       ./create_solr_config.sh "$SOLR_DIR" 
+       ./create_solr_config.sh "$SOLR_DIR"
 
    This will configure your Solr server with a sample configuration. It
    will overwrite the default Solr configuration. After this step you
