@@ -160,8 +160,42 @@ Install PostgreSQL with:
 
     sudo yum install postgresql-server postgresql-contrib
     sudo postgresql-setup initdb
+
+By default, PostgreSQL does not allow password authentication. We will have
+to change that by editing its host-based authentication (HBA) configuration.
+
+Open the HBA configuration with your favourite text editor. We will use vi:
+
+    sudo vi /var/lib/pgsql/data/pg_hba.conf
+
+Find the lines that looks like this, near the bottom of the file:
+
+    pg_hba.conf excerpt (original)
+    host    all             all             127.0.0.1/32            ident
+    host    all             all             ::1/128                 ident
+
+Then replace "ident" with "md5", so they look like this:
+
+    pg_hba.conf excerpt (updated)
+    host    all             all             127.0.0.1/32            md5
+    host    all             all             ::1/128                 md5
+
+Save and exit. PostgreSQL is now configured to allow password authentication.
+
+Now start and enable PostgreSQL:
+
     sudo systemctl start postgresql
     sudo systemctl enable postgresql
+
+PostgreSQL is now ready to be used. We can go proceed to create the
+META-SHARE DB user:
+
+::
+
+    sudo su – postgres
+    createuser -W metashare_user
+
+
 
 
 
