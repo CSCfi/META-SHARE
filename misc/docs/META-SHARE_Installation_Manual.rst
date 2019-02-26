@@ -227,9 +227,11 @@ command to get all required build dependencies:
 
         apt-get build-dep python2.6
 
+Centos 7 ships with Python 2.7.5, which satisfies Meta-Shares requirements.
 
-Python Modules
-^^^^^^^^^^^^^^^^^^
+
+Python Modules for Ubuntu
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 META-SHARE V3.0.3 does not bundle anymore all the python dependencies.
 Instead of doing that, we follow the standard way of working with
@@ -267,6 +269,27 @@ META-SHARE dependencies complete.`` should appear in the end.
 
 For your information, the dependencies and their respective versions are
 listed in the `requirements.txt` file.
+
+
+Python Modules for Centos 7
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Given that Centos 7 ships with Python 2.7.5, we can proceed to install PIP, and
+use it to deploy the required ``libpq5`` libraries and headers.
+
+
+Install PIP and upgrade it to its later version:
+```
+sudo yum install python-pip python-devel
+sudo pip install --upgrade pip
+```
+
+Install libpq5:
+
+```
+sudo yum install libpqxx-devel
+```
+
+
 
 Web Server
 ^^^^^^^^^^^^^^^^^^
