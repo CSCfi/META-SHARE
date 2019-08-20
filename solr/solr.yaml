@@ -17,14 +17,23 @@ spec:
         deploymentconfig: solr
     spec:
       containers:
-      - image: solr:6.6.6
+      # - image: "docker-registry.default.svc:5000/jkataja-training/solr-metashare:latest"
+      - image: solr-metashare:latest
         name: solr
         ports:
         - containerPort: 8983
           protocol: TCP
-        resources: {}
+      resources: {}
   triggers:
   - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - solr
+      from:
+        name: solr-metashare:latest
+
 ---
 apiVersion: v1
 kind: Service

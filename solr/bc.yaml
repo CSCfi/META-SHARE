@@ -1,0 +1,20 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "solr-metashare"
+  labels:
+    app: "solr-metashare"
+spec:
+  runPolicy: "Serial"
+  output:
+    to:
+      kind: ImageStreamTag
+      name: solr-metashare:latest
+  source:
+    dockerfile: |
+      FROM solr:6.6.6
+      RUN curl -O -L https://raw.githubusercontent.com/CSCfi/META-SHARE/feature-rahti/solr/solr/main/conf/schema.xml
+      RUN ls -r /opt/solr/server
+      RUN chmod ag+rwX /opt/solr/server/logs
+  strategy:
+    type: Docker
