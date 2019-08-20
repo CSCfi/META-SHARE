@@ -1,4 +1,5 @@
 ---
+apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
@@ -11,9 +12,6 @@ spec:
     deploymentconfig: solr
   template:
     metadata:
-      annotations:
-        openshift.io/generated-by: OpenShiftNewApp
-      creationTimestamp: null
       labels:
         app: solr
         deploymentconfig: solr
