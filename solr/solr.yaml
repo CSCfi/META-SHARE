@@ -1,0 +1,45 @@
+---
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: solr
+  name: solr
+spec:
+  replicas: 1
+  selector:
+    app: solr
+    deploymentconfig: solr
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: solr
+        deploymentconfig: solr
+    spec:
+      containers:
+      - image: solr:6.6.6
+        name: solr
+        ports:
+        - containerPort: 8983
+          protocol: TCP
+        resources: {}
+  triggers:
+  - type: ConfigChange
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: solr
+  name: solr
+spec:
+  ports:
+  - name: 8983-tcp
+    port: 8983
+    protocol: TCP
+    targetPort: 8983
+  selector:
+    app: solr
+    deploymentconfig: solr
