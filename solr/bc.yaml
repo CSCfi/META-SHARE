@@ -13,7 +13,7 @@ spec:
   source:
     dockerfile: |
       FROM solr:6.6.6
-      RUN curl -O -L https://raw.githubusercontent.com/CSCfi/META-SHARE/feature-rahti/solr/solr/main/conf/schema.xml
+      RUN curl -o /opt/solr/server/solr/schema.xml -L https://raw.githubusercontent.com/CSCfi/META-SHARE/feature-rahti/solr/solr/main/conf/schema.xml
       RUN ls -r /opt/solr/server
       RUN chmod ag+rwX /opt/solr/server/logs
   strategy:
